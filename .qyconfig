@@ -1,0 +1,7 @@
+{
+  "root": "/",
+  "imgThreshold": 50,
+  "imgExts": ["png"],
+  "imgSSIMThreshold": 0.7,
+  "webhookUrl": "http://www.xxx.com/"
+}

@@ -1,5 +1,5 @@
-const request = require("request");
-
+// const request = require("request");
+function request() {}
 const mail = {
   send({ webhookUrl }) {
     // 读取webhook url配置文件

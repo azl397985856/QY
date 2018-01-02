@@ -23,5 +23,16 @@
   "bugs": {
     "url": "https://github.com/azl397985856/QY/issues"
   },
-  "homepage": "https://github.com/azl397985856/QY#readme"
+  "homepage": "https://github.com/azl397985856/QY#readme",
+  "dependencies": {
+    "commander": "^2.12.2",
+    "nodemailer": "^4.4.1"
+  },
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-loose": "^8.0.0",
+    "babel-preset-stage-3": "^6.24.1"
+  }
 }

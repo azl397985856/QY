@@ -3,11 +3,11 @@
 var program = require("commander");
 var fs = require("fs");
 
-var imgCore = require("../src/imgCore");
-var depCore = require("../src/depCore");
+var imgCore = require("../lib/imgCore");
+var depCore = require("../lib/depCore");
 
-var mail = require("../src/mail");
-var webhook = require("../src/webhook");
+var mail = require("../lib/mail");
+var webhook = require("../lib/webhook");
 
 program
   .version(require("../package.json").version)
@@ -69,6 +69,6 @@ fs.readFile(config, function(err, data) {
         });
     }
   } else {
-    console.error("config file", config, "is not found");
+    console.error("config file", config || "", "is not found");
   }
 });
