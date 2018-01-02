@@ -36,7 +36,7 @@
 
 ### 配置
 
-将.qyconfig 放到任何地方，推荐项目根目录。
+1. 将.qyconfig 放到项目根目录。
 
 文件内容如下：
 
@@ -49,3 +49,20 @@
   webhookUrl: 'http://www.xxx.com/', // 推送结果的webhookUrl，默认不推送
 }
 ```
+
+2. 安装 qy-cli
+
+```bash
+npm i qy-cli -g
+```
+
+3. 运行
+
+```
+cd your-workspace
+qy
+```
+
+## License
+
+MIT
