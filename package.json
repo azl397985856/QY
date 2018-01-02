@@ -1,0 +1,27 @@
+{
+  "name": "qy",
+  "version": "0.1.0",
+  "description": "一站式前端自动检测平台",
+  "main": "bin/qy-cli.js",
+  "bin": {
+    "qy": "qy-cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azl397985856/QY.git"
+  },
+  "keywords": [
+    "前端检测",
+    "依赖分析",
+    "图片检测"
+  ],
+  "author": "zhipenglu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/azl397985856/QY/issues"
+  },
+  "homepage": "https://github.com/azl397985856/QY#readme"
+}
