@@ -19,13 +19,17 @@ program
     "-C, --config <str>",
     "specify your config file, default is .qyconfig"
   )
+  .option("-il, --img-list <str,str...>", "img list string seprated by comma")
   .parse(process.argv);
 
-var deploy_env = program.args[0];
+var imgList = (program.imgList || "").split(",").filter(q => q);
+
 var config = program.config ? program.config : ".qyconfig";
+
 fs.readFile(config, function(err, data) {
   if (!err) {
     var config = JSON.parse(data.toString("utf-8"));
+
     if (config) {
       var mergedConfig = Object.assign(config, {
         cwd: process.cwd()
@@ -33,24 +37,22 @@ fs.readFile(config, function(err, data) {
 
       // 1. 图片：包括图片类型检测，图片大小检测，图片相似度检测。
       // loading
-      log(chalk.blue("开始检测......"));
+      log(chalk.blue("准备开始检测......"));
+
       var imgPromise = imgCore
-        .check(mergedConfig)
+        .check(imgList, mergedConfig) // TODO: 解析样式文件中的图片，生成图片数组
         .then(res => {
           // loading finish
-
           if (res.success) {
             log(chalk.green("图片检测未发现问题"));
           } else {
             log(chalk.red("图片检测发现问题"));
-
-            return Object.assign(res, { content: "图片检测发现问题" });
           }
           return res;
         })
         .catch(err => {
           // loading finish
-          log(chalk.red("图片检测失败"));
+          log(chalk.red("图片检测失败", err));
           return err;
         });
       // 2. 依赖：对项目的 package 进行检测，发现没用的，过期的，是否有已知的安全隐患。
@@ -62,20 +64,19 @@ fs.readFile(config, function(err, data) {
             log(chalk.green("依赖检测未发现问题"));
           } else {
             log(chalk.red("依赖检测发现问题"));
-            return Object.assign(res, { content: "依赖检测发现问题" });
           }
           return res;
         })
         .catch(err => {
           // loading finish
           // chalk red
-          log(chalk.red("依赖检测失败"));
+          log(chalk.red("依赖检测失败", err));
           return err;
         });
 
       Promise.all([imgPromise, depPromise])
         .then(res => {
-          // xxx
+          // mail or post webhook
           webhook.send(res, config);
           mail.send(res, config);
         })

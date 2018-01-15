@@ -23,7 +23,7 @@ const depCore = {
       }
     });
     const result = {
-      success: false,
+      success: true,
       warning: [],
       needUpdate: [],
       danger: []
