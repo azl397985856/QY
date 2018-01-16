@@ -12,6 +12,10 @@ var webhook = require("../lib/webhook");
 
 var log = console.log;
 
+function applyPlugins(plugins = [], payload) {
+  return plugins.map(plugin => plugin(payload));
+}
+
 program
   .version(require("../package.json").version)
   .usage("[project name] [options] ")
@@ -20,11 +24,30 @@ program
     "specify your config file, default is .qyconfig"
   )
   .option("-il, --img-list <str,str...>", "img list string seprated by comma")
+  .option("-p, --plugins <str,str...>", "plugin list string seprated by comma")
   .parse(process.argv);
 
 var imgList = (program.imgList || "").split(",").filter(q => q);
 
 var config = program.config ? program.config : ".qyconfig";
+
+var plugins = program.plugins;
+
+let costomPlugins;
+
+if (plugins) {
+  try {
+    costomPlugins = plugins.split(",").map(plugin => {
+      const module = require(`qy-plugin-${plugin}`);
+      if (module instanceof Function) {
+        return module;
+      }
+      throw new Error("插件必须是一个函数");
+    });
+  } catch (err) {
+    log(chalk.red("加载插件出错", err));
+  }
+}
 
 fs.readFile(config, function(err, data) {
   if (!err) {
@@ -44,6 +67,10 @@ fs.readFile(config, function(err, data) {
         .then(res => {
           // loading finish
           if (res.success) {
+            applyPlugins(costomPlugins, {
+              imgList,
+              config
+            });
             log(chalk.green("图片检测未发现问题"));
           } else {
             log(chalk.red("图片检测发现问题"));
