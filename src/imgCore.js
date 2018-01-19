@@ -29,16 +29,18 @@ const imgCore = {
           });
         });
       } else {
-        fetch(imgUrl).then(response => {
+        return fetch(imgUrl).then(response => {
           const type = response.headers.get("Content-Type");
           const size = response.headers.get("Content-Length") / 1024;
 
           let errorMsg = "";
           const matchType = imgExts.indexOf(type) !== -1;
+
           if (!matchType)
             errorMsg += `文件(${imgUrl})的类型${type}与期望不匹配\n`;
           if (size > imgThreshold)
             errorMsg += `文件(${imgUrl})的大小${size}与期望不匹配\n`;
+
           return errorMsg;
         });
       }

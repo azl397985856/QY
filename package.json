@@ -9,7 +9,7 @@
   "scripts": {
     "build": "babel src -d lib -q",
     "start": "npm run build&& node bin/qy-cli.js",
-    "test": "npm run build && FORCE_COLOR=1 node test/walk"
+    "test": "npm run build && mocha test/index.test.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-loose": "^8.0.0",
-    "babel-preset-stage-3": "^6.24.1"
+    "babel-preset-stage-3": "^6.24.1",
+    "mocha": "^5.0.0"
   }
 }
