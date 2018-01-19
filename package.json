@@ -9,13 +9,17 @@
   "scripts": {
     "build": "babel src -d lib -q",
     "start": "npm run build&& node bin/qy-cli.js",
-    "test": "npm run build && node test/imgCore"
+    "test": "npm run build && FORCE_COLOR=1 node test/walk"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/azl397985856/QY.git"
   },
-  "keywords": ["前端检测", "依赖分析", "图片检测"],
+  "keywords": [
+    "前端检测",
+    "依赖分析",
+    "图片检测"
+  ],
   "author": "zhipenglu",
   "license": "MIT",
   "bugs": {
@@ -26,6 +30,7 @@
     "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "isomorphic-fetch": "^2.2.1",
+    "mime": "^2.2.0",
     "nodemailer": "^4.4.1"
   },
   "devDependencies": {

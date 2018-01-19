@@ -80,6 +80,7 @@ fs.readFile(config, function(err, data) {
         .catch(err => {
           // loading finish
           log(chalk.red("图片检测失败", err));
+
           return err;
         });
       // 2. 依赖：对项目的 package 进行检测，发现没用的，过期的，是否有已知的安全隐患。
