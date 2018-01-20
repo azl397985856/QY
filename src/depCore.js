@@ -2,13 +2,14 @@ import fs from "fs";
 
 const depCore = {
   check(config) {
-    const cwd = config.cwd || "";
+    const root = config.root || "";
+
     // 读取package文件
     // 将依赖转化为数组
     // 依次发送GET请求获取解析结果
     // 匹配，计算结果
 
-    fs.readFile(`${cwd}/package.json`, "utf-8", (err, data) => {
+    fs.readFile(`${root}/package.json`, "utf-8", (err, data) => {
       if (err) throw err;
 
       try {

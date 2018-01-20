@@ -36,7 +36,7 @@
 
 ### 配置
 
-1. 将.qyconfig 放到项目根目录。
+1. 将 qy.config.js 放到项目根目录。
 
 文件内容如下：
 
@@ -61,6 +61,24 @@ npm i qy-cli -g
 ```
 cd your-workspace
 qy
+```
+
+## FQ&A
+
+1. Cannot find module '/xxxx/xxxx/qy.config.js'
+
+maybe you should specify the root.for example:
+
+```js
+./qy-cli.js --root ../
+```
+
+2. the chalk does't work as expected.
+
+try FORCE_COLOR=1.
+
+```bash
+FORCE_COLOR=1 node test/walk.js
 ```
 
 ## License
