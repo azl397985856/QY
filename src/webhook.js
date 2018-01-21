@@ -30,7 +30,7 @@ const webhook = {
         }
       })
         .then(res => res.json())
-        .then(res => console.log("res", res))
+        .then(res => console.log("钉钉webhook发送成功, res:", res))
         .catch(err => console.log("err", err));
     }
     return Promise.resolve({ success: true });

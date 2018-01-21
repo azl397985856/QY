@@ -1,25 +1,23 @@
 {
-  "name": "qy",
-  "version": "0.1.0",
+  "name": "qy-cli",
+  "version": "0.1.10",
   "description": "一站式前端自动检测平台",
-  "main": "bin/qy-cli.js",
-  "bin": {
-    "qy": "qy-cli.js"
+  "main": "dist/bundle.js",
+  "node ": {
+    "qy": "dist/bundle.js"
   },
   "scripts": {
-    "build": "babel src -d lib -q",
-    "start": "npm run build&& node bin/qy-cli.js",
-    "test": "npm run build && mocha test/index.test.js"
+    "build": "webpack",
+    "build-unit": "babel src -d lib -q",
+    "start": "npm run build && node dist/bundle.js",
+    "test": "npm run build-unit && mocha test/index.test.js",
+    "test-cli": "node test/walk.test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/azl397985856/QY.git"
   },
-  "keywords": [
-    "前端检测",
-    "依赖分析",
-    "图片检测"
-  ],
+  "keywords": ["前端检测", "依赖分析", "图片检测"],
   "author": "zhipenglu",
   "license": "MIT",
   "bugs": {
@@ -34,10 +32,13 @@
     "nodemailer": "^4.4.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-loose": "^8.0.0",
     "babel-preset-stage-3": "^6.24.1",
-    "mocha": "^5.0.0"
+    "mocha": "^5.0.0",
+    "webpack": "^3.10.0"
   }
 }

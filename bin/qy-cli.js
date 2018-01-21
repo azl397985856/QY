@@ -1,14 +1,16 @@
-#!/usr/bin/env node
-
 var program = require("commander");
 var chalk = require("chalk");
 var fs = require("fs");
+var path = require("path");
 
-var imgCore = require("../lib/imgCore");
-var depCore = require("../lib/depCore");
+var imgCore = require("../src/imgCore");
+var depCore = require("../src/depCore");
 
-var mail = require("../lib/mail");
-var webhook = require("../lib/webhook");
+var mail = require("../src/mail");
+var webhook = require("../src/webhook");
+
+// utils
+var loadDir = require("../src/utils");
 
 var log = console.log;
 
@@ -50,7 +52,7 @@ if (plugins) {
   }
 }
 const root = program.root || process.cwd();
-const data = require(`${root}/${config}`);
+let data = loadDir(`${root}/${config}`);
 
 if (data) {
   var mergedConfig = Object.assign(data, {
@@ -68,7 +70,7 @@ if (data) {
       if (res.success) {
         applyPlugins(costomPlugins, {
           imgList,
-          config
+          config: data
         });
         log(chalk.green("图片检测未发现问题"));
       } else {
@@ -104,12 +106,12 @@ if (data) {
   Promise.all([imgPromise, depPromise])
     .then(res => {
       // mail or post webhook
-      webhook.send(res, config);
-      mail.send(res, config);
+      webhook.send(res, data);
+      mail.send(res, data);
     })
     .catch(err => {
       // mail or post webhook
-      webhook.send(err, config);
-      mail.send(err, config);
+      webhook.send(err, data);
+      mail.send(err, data);
     });
 }

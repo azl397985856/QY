@@ -10,7 +10,7 @@ const depCore = {
     // 匹配，计算结果
 
     fs.readFile(`${root}/package.json`, "utf-8", (err, data) => {
-      if (err) throw err;
+      if (err) return; // 只是不分析依赖而已
 
       try {
         const result = JSON.parse(data);
