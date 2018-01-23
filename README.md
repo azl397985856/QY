@@ -47,6 +47,9 @@
   imgExts: ['png'], // 限制的图片类型，不限制填*，也可不填。默认不限制。
   imgSSIMThreshold: 0.7, // 图片相似度阀值，默认为0.8
   webhookUrl: 'http://www.xxx.com/', // 推送结果的webhookUrl，默认不推送
+  postProccess() {
+      return content.replace(/.*project-name/gim, "project-name");
+  }
 }
 ```
 
