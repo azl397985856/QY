@@ -1,13 +1,9 @@
 const fetch = require("isomorphic-fetch");
 
 const webhook = {
-  send(results, { webhookUrl }) {
+  send({ content, webhookUrl }) {
     // 目前使用钉钉机器人：
     // https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.karFPe&treeId=257&articleId=105735&docType=1#s2
-    const content = results
-      .map(r => r.content)
-      .filter(q => q)
-      .join("\n");
 
     if (content) {
       console.info("---------------");

@@ -59,19 +59,20 @@ if (config) {
     root
   });
 
-  function postWebhook(data) {
-    // mail or post webhook
+  function postWebhook({ img }) {
     const webhookUrl = config.webhookUrl;
     const postProccess = config.postProccess;
-    let processedContent = data.content;
+    let processedContent = img.content;
     if (webhookUrl) {
       if (postProccess && postProccess instanceof Function) {
-        processedContent = postProccess(data.content);
+        processedContent = postProccess(img.content);
       }
+
       webhook.send(
         Object.assign({
-          data,
-          content: processedContent
+          img,
+          content: processedContent,
+          webhookUrl
         }),
         config
       );
@@ -125,12 +126,18 @@ if (config) {
   Promise.all([imgPromise, depPromise])
     .then(res => {
       // mail or post webhook
-      postWebhook(res);
+      postWebhook({
+        img: res[0],
+        dep: res[1]
+      });
       // mail.send(res, config);
     })
     .catch(err => {
       // mail or post webhook
-      postWebhook(err);
+      postWebhook({
+        img: err[0],
+        dep: err[1]
+      });
       // mail.send(err, config);
     });
 }

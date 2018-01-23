@@ -1,6 +1,6 @@
 {
   "name": "qy-cli",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "一站式前端自动检测平台",
   "main": "dist/bundle.js",
   "node ": {
@@ -9,7 +9,8 @@
   "scripts": {
     "build": "webpack",
     "build-unit": "babel src -d lib -q",
-    "start": "npm run build && node dist/bundle.js",
+    "start":
+      "npm run build && node dist/bundle.js --img-list https://yun.tuisnake.com/h5/activity/fishinggold/images/table.png",
     "test": "npm run build-unit && mocha test/index.test.js",
     "test-cli": "node test/walk.test.js"
   },
