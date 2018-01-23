@@ -28,15 +28,15 @@
 
 ## 下一步
 
-1. 加入不安全写法的检测，并可以通过插件实现定制。如公司信息泄漏，安全隐患写法等。
-2. 支持更多图片格式和类型，如 base64，webp 等
-3. 将 QY 拆分为 QY-cli 和 QY-core
+1.  加入不安全写法的检测，并可以通过插件实现定制。如公司信息泄漏，安全隐患写法等。
+2.  支持更多图片格式和类型，如 base64，webp 等
+3.  将 QY 拆分为 QY-cli 和 QY-core
 
 ## 让我们开始吧
 
 ### 配置
 
-1. 将 qy.config.js 放到项目根目录。
+1.  将 qy.config.js 放到项目根目录。
 
 文件内容如下：
 
@@ -68,13 +68,13 @@
 }
 ```
 
-2. 安装 qy-cli
+2.  安装 qy-cli
 
 ```bash
 npm i qy-cli -g
 ```
 
-3. 运行
+3.  运行
 
 ```
 cd your-workspace
@@ -82,14 +82,15 @@ qy
 ```
 
 ## 插件
+
 我们提供了插件机制供开发者定制自己的功能。这里有一个插件的例子：[图片压缩插件](https://www.npmjs.com/package/qy-plugin-compress)
 
-本质上插件就是一个函数，函数的参数是用户的配置信息（见上方的配置）和img-list。插件将会在**检测通过之后**调用。
+本质上插件就是一个函数，函数的参数是用户的配置信息（见上方的配置）和 img-list。插件将会在**检测通过之后**调用。
 将来我们也可能增加更多钩子。 比如检测失败的钩子，检测成功的钩子等。
 
 ## FQ&A
 
-1. Cannot find module '/xxxx/xxxx/qy.config.js'
+1.  Cannot find module '/xxxx/xxxx/qy.config.js'
 
 maybe you should specify the root.for example:
 
@@ -97,7 +98,7 @@ maybe you should specify the root.for example:
 ./qy-cli.js --root ../
 ```
 
-2. the chalk does't work as expected.
+2.  the chalk does't work as expected.
 
 try FORCE_COLOR=1.
 

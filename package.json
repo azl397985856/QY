@@ -17,7 +17,11 @@
     "type": "git",
     "url": "git+https://github.com/azl397985856/QY.git"
   },
-  "keywords": ["前端检测", "依赖分析", "图片检测"],
+  "keywords": [
+    "前端检测",
+    "依赖分析",
+    "图片检测"
+  ],
   "author": "zhipenglu",
   "license": "MIT",
   "bugs": {
