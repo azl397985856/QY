@@ -22,7 +22,9 @@ const imgCore = {
                 errorMsg += `文件(${imgUrl})的类型${type}与期望不匹配\n`;
 
               if (size > imgThreshold)
-                errorMsg += `文件(${imgUrl})的大小${size}KB与期望不匹配\n`;
+                errorMsg += `文件(${imgUrl})的大小${size.toFixed(
+                  1
+                )}KB与期望不匹配\n`;
               return resolve(errorMsg);
             }
             return reject(err);
@@ -39,7 +41,9 @@ const imgCore = {
           if (!matchType)
             errorMsg += `文件(${imgUrl})的类型${type}与期望不匹配\n`;
           if (size > imgThreshold)
-            errorMsg += `文件(${imgUrl})的大小${size}KB与期望不匹配\n`;
+            errorMsg += `文件(${imgUrl})的大小${size.toFixed(
+              1
+            )}KB与期望不匹配\n`;
 
           return errorMsg;
         });
