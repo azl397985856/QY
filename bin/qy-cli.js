@@ -32,7 +32,7 @@ program
 
 var imgList = (program.imgList || "").split(",").filter(q => q);
 
-var config = program.config ? program.config : "qy.config.js";
+var configFile = program.config ? program.config : "qy.config.js";
 
 var plugins = program.plugins;
 
@@ -52,12 +52,31 @@ if (plugins) {
   }
 }
 const root = program.root || process.cwd();
-let data = loadDir(`${root}/${config}`);
+let config = loadDir(`${root}/${configFile}`);
 
-if (data) {
-  var mergedConfig = Object.assign(data, {
+if (config) {
+  var mergedConfig = Object.assign(config, {
     root
   });
+
+  function postWebhook(data) {
+    // mail or post webhook
+    const webhookUrl = config.webhookUrl;
+    const postProccess = config.postProccess;
+    let processedContent = data.content;
+    if (webhookUrl) {
+      if (postProccess && postProccess instanceof Function) {
+        processedContent = postProccess(data.content);
+      }
+      webhook.send(
+        Object.assign({
+          data,
+          content: processedContent
+        }),
+        config
+      );
+    }
+  }
 
   // 1. 图片：包括图片类型检测，图片大小检测，图片相似度检测。
   // loading
@@ -70,7 +89,7 @@ if (data) {
       if (res.success) {
         applyPlugins(costomPlugins, {
           imgList,
-          config: data
+          config: config
         });
         log(chalk.green("图片检测未发现问题"));
       } else {
@@ -106,12 +125,12 @@ if (data) {
   Promise.all([imgPromise, depPromise])
     .then(res => {
       // mail or post webhook
-      webhook.send(res, data);
-      mail.send(res, data);
+      postWebhook(res);
+      // mail.send(res, config);
     })
     .catch(err => {
       // mail or post webhook
-      webhook.send(err, data);
-      mail.send(err, data);
+      postWebhook(err);
+      // mail.send(err, config);
     });
 }
