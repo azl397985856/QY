@@ -50,7 +50,8 @@
   postProccess(content) { // 对检测结果的后处理，参数是检测报告，string类型
       return content.replace(/.*project-name/gim, "project-name");
   },
-   checkDepsOpts: { // 检测依赖配置，详情：https://github.com/depcheck/depcheck#API
+  checkDeps: true, // 只有true才会检测依赖
+  checkDepsOpts: { // 检测依赖配置，详情：https://github.com/depcheck/depcheck#API
     withoutDev: false, // [DEPRECATED] check against devDependencies
     ignoreBinPackage: false, // ignore the packages with bin entry
     ignoreDirs: [
