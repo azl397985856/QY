@@ -69,8 +69,8 @@ if (config) {
 
     let processedDepContent = Boolean(checkDeps) ? dep.content : "";
 
-    // 有检测结果且用户配置了webhookUrl
-    if ((processedImgContent || processedDepContent) && webhookUrl) {
+    if (processedDepContent || processedImgContent) {
+      // 传递给用户自定义的处理函数处理
       if (postProccess && postProccess instanceof Function) {
         processedDepContent = postProccess(processedDepContent);
       }
@@ -79,17 +79,26 @@ if (config) {
         processedImgContent = postProccess(processedImgContent);
       }
 
-      webhook.send(
-        Object.assign({
-          img,
-          content: {
-            img: processedImgContent,
-            dep: processedDepContent
-          },
-          webhookUrl
-        }),
-        config
-      );
+      // 打印届国际
+      const msg = [
+        processedImgContent && "-------图片检测结果--------",
+        processedImgContent || "",
+        processedDepContent && "-------依赖检测结果--------",
+        processedDepContent || ""
+      ].join("\n");
+
+      console.log(msg);
+
+      // 有检测结果且用户配置了webhookUrl
+      if (webhookUrl) {
+        webhook.send(
+          Object.assign({
+            msg,
+            webhookUrl
+          }),
+          config
+        );
+      }
     }
   }
 
