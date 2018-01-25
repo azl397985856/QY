@@ -48,7 +48,7 @@
   imgSSIMThreshold: 0.7, // 图片相似度阀值，默认为0.8
   webhookUrl: 'http://www.xxx.com/', // 推送结果的webhookUrl，默认不推送
   postProccess(content) { // 对检测结果的后处理，参数是检测报告，string类型
-      return content.replace(/.*project-name/gim, "project-name");
+      return content.replace(/\/Users.*?project-name/gim, "project-name");
   },
   checkDeps: true, // 只有true才会检测依赖
   checkDepsOpts: { // 检测依赖配置，详情：https://github.com/depcheck/depcheck#API
