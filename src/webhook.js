@@ -5,10 +5,16 @@ const webhook = {
     // 目前使用钉钉机器人：
     // https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.karFPe&treeId=257&articleId=105735&docType=1#s2
 
-    if (content) {
-      console.info("---------------");
-      console.info(content);
-      console.info("---------------");
+    if (content.img || content.dep) {
+      const msg = [
+        content.img && "-------图片检测结果--------",
+        content.img || "",
+        content.dep && "-------依赖检测结果--------",
+        content.dep || ""
+      ].join("\n");
+
+      console.log(msg);
+
       return fetch(webhookUrl, {
         method: "POST",
         body: JSON.stringify({

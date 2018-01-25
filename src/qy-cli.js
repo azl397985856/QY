@@ -1,16 +1,17 @@
+#!/usr/bin/env node
 var program = require("commander");
 var chalk = require("chalk");
 var fs = require("fs");
 var path = require("path");
 
-var imgCore = require("../src/imgCore");
-var depCore = require("../src/depCore");
+var imgCore = require("./imgCore");
+var depCore = require("./depCore");
 
-var mail = require("../src/mail");
-var webhook = require("../src/webhook");
+var mail = require("./mail");
+var webhook = require("./webhook");
 
 // utils
-var loadDir = require("../src/utils");
+var loadDir = require("./utils");
 
 var log = console.log;
 
@@ -59,19 +60,32 @@ if (config) {
     root
   });
 
-  function postWebhook({ img }) {
+  function postWebhook({ img, dep }) {
     const webhookUrl = config.webhookUrl;
     const postProccess = config.postProccess;
-    let processedContent = img.content;
-    if (webhookUrl) {
+    const checkDeps = config.checkDeps;
+
+    let processedImgContent = img.content;
+
+    let processedDepContent = Boolean(checkDeps) ? dep.content : "";
+
+    // 有检测结果且用户配置了webhookUrl
+    if ((processedImgContent || processedDepContent) && webhookUrl) {
       if (postProccess && postProccess instanceof Function) {
-        processedContent = postProccess(img.content);
+        processedDepContent = postProccess(processedDepContent);
+      }
+
+      if (postProccess && postProccess instanceof Function) {
+        processedImgContent = postProccess(processedImgContent);
       }
 
       webhook.send(
         Object.assign({
           img,
-          content: processedContent,
+          content: {
+            img: processedImgContent,
+            dep: processedDepContent
+          },
           webhookUrl
         }),
         config
@@ -134,6 +148,7 @@ if (config) {
     })
     .catch(err => {
       // mail or post webhook
+
       postWebhook({
         img: err[0],
         dep: err[1]

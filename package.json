@@ -2,16 +2,15 @@
   "name": "qy-cli",
   "version": "0.1.13",
   "description": "一站式前端自动检测平台",
-  "main": "dist/bundle.js",
+  "main": "lib/qy-cli.js",
   "node ": {
-    "qy": "dist/bundle.js"
+    "qy": "lib/qy-cli.js"
   },
   "scripts": {
-    "build": "webpack",
-    "build-unit": "babel src -d lib -q",
-    "start":
-      "npm run build && node dist/bundle.js --img-list https://yun.tuisnake.com/h5/activity/fishinggold/images/table.png",
-    "test": "npm run build-unit && mocha test/index.test.js",
+    "clean": "rm -rf lib",
+    "build": "npm run clean && babel src -d lib -q",
+    "start": "npm run build && node lib/qy-cli.js",
+    "test": "npm run build && mocha test/index.test.js",
     "test-cli": "node test/walk.test.js"
   },
   "repository": {
@@ -28,18 +27,19 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "commander": "^2.12.2",
+    "depcheck": "^0.6.8",
     "isomorphic-fetch": "^2.2.1",
     "mime": "^2.2.0",
     "nodemailer": "^4.4.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-cli": "^6.26.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-loose": "^8.0.0",
     "babel-preset-stage-3": "^6.24.1",
+    "colors": "^1.1.2",
     "mocha": "^5.0.0",
-    "webpack": "^3.10.0"
+    "walk": "^2.3.9"
   }
 }
