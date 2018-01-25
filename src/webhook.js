@@ -20,7 +20,7 @@ const webhook = {
         body: JSON.stringify({
           msgtype: "text", // 目前只支持text类型
           text: {
-            content
+            content: msg
           }
           // at: {
           //   atMobiles: ["1xxxxx", "1xxxxx"],

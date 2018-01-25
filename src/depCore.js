@@ -49,7 +49,8 @@ function stringify(obj) {
       }
       return `${key}:${item}`;
     })
-    .join("");
+    .filter(q => q)
+    .join("\n");
 }
 const depCore = {
   check(config) {
