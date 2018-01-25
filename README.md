@@ -81,6 +81,11 @@ cd your-workspace
 qy
 ```
 
+## 插件
+我们提供了插件机制供开发者定制自己的功能。这里有一个插件的例子：[图片压缩插件](https://www.npmjs.com/package/qy-plugin-compress)
+
+本质上插件就是一个函数，函数的参数是用户的配置信息（见上方的配置）和img-list
+
 ## FQ&A
 
 1. Cannot find module '/xxxx/xxxx/qy.config.js'
@@ -98,6 +103,12 @@ try FORCE_COLOR=1.
 ```bash
 FORCE_COLOR=1 node test/walk.js
 ```
+
+## 参考
+
+[Does this package have known security vulnerabilities](https://snyk.io/test/npm/redux)
+
+[controlling-node-js-security-risk-npm-dependencies](https://blog.risingstack.com/controlling-node-js-security-risk-npm-dependencies/)
 
 ## License
 
