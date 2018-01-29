@@ -48,9 +48,10 @@
   imgSSIMThreshold: 0.7, // 图片相似度阀值，默认为0.8
   webhookUrl: 'http://www.xxx.com/', // 推送结果的webhookUrl，默认不推送
   postProccess(content) { // 对检测结果的后处理，参数是检测报告，string类型
-      return content.replace(/.*project-name/gim, "project-name");
+      return content.replace(/\/Users.*?project-name/gim, "project-name");
   },
-   checkDepsOpts: { // 检测依赖配置，详情：https://github.com/depcheck/depcheck#API
+  checkDeps: true, // 只有true才会检测依赖
+  checkDepsOpts: { // 检测依赖配置，详情：https://github.com/depcheck/depcheck#API
     withoutDev: false, // [DEPRECATED] check against devDependencies
     ignoreBinPackage: false, // ignore the packages with bin entry
     ignoreDirs: [
@@ -80,6 +81,12 @@ cd your-workspace
 qy
 ```
 
+## 插件
+我们提供了插件机制供开发者定制自己的功能。这里有一个插件的例子：[图片压缩插件](https://www.npmjs.com/package/qy-plugin-compress)
+
+本质上插件就是一个函数，函数的参数是用户的配置信息（见上方的配置）和img-list。插件将会在**检测通过之后**调用。
+将来我们也可能增加更多钩子。 比如检测失败的钩子，检测成功的钩子等。
+
 ## FQ&A
 
 1. Cannot find module '/xxxx/xxxx/qy.config.js'
@@ -97,6 +104,12 @@ try FORCE_COLOR=1.
 ```bash
 FORCE_COLOR=1 node test/walk.js
 ```
+
+## 参考
+
+[Does this package have known security vulnerabilities](https://snyk.io/test/npm/redux)
+
+[controlling-node-js-security-risk-npm-dependencies](https://blog.risingstack.com/controlling-node-js-security-risk-npm-dependencies/)
 
 ## License
 
