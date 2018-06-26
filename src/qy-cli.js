@@ -53,7 +53,12 @@ if (plugins) {
   }
 }
 const root = program.root || process.cwd();
-let config = loadDir(`${root}/${configFile}`);
+let config;
+if (!fs.statSync(`${root}/${configFile}`).isFile()) {
+  config = {};
+} else {
+  config = loadDir(`${root}/${configFile}`);
+}
 
 if (config) {
   var mergedConfig = Object.assign(config, {
@@ -106,17 +111,25 @@ if (config) {
   // loading
   log(chalk.blue("准备开始检测......"));
 
+  // 目前插件只有一种， 就是在运行之前执行一次，
+  // 将图片列表和config配置传过去
+  fs.readFile(`${root}/package.json`, "utf-8", (err, data) => {
+    if (err) return err;
+
+    applyPlugins(costomPlugins, {
+      imgList,
+      config: config,
+      packageData: JSON.parse(data)
+    });
+  });
+
   var imgPromise = imgCore
     .check(imgList, mergedConfig) // TODO: 解析样式文件中的图片，生成图片数组
     .then(res => {
       // loading finish
       if (res.success) {
-        applyPlugins(costomPlugins, {
-          imgList,
-          config: config
-        });
         log(chalk.green("图片检测未发现问题"));
-      } else {
+      } else if (config.checkIMG) {
         log(chalk.red("图片检测发现问题"));
       }
       return res;
@@ -134,7 +147,7 @@ if (config) {
       // loading finish
       if (res.success) {
         log(chalk.green("依赖检测未发现问题"));
-      } else {
+      } else if (config.checkDeps) {
         log(chalk.red("依赖检测发现问题"));
       }
       return res;

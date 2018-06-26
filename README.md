@@ -50,6 +50,7 @@
   postProccess(content) { // 对检测结果的后处理，参数是检测报告，string类型
       return content.replace(/\/Users.*?project-name/gim, "project-name");
   },
+  checkIMG: true, // 只有true才会检测图片
   checkDeps: true, // 只有true才会检测依赖
   checkDepsOpts: { // 检测依赖配置，详情：https://github.com/depcheck/depcheck#API
     withoutDev: false, // [DEPRECATED] check against devDependencies
