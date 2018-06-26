@@ -123,41 +123,50 @@ if (config) {
     });
   });
 
-  var imgPromise = imgCore
-    .check(imgList, mergedConfig) // TODO: 解析样式文件中的图片，生成图片数组
-    .then(res => {
-      // loading finish
-      if (res.success) {
-        log(chalk.green("图片检测未发现问题"));
-      } else if (config.checkIMG) {
-        log(chalk.red("图片检测发现问题"));
-      }
-      return res;
-    })
-    .catch(err => {
-      // loading finish
-      log(chalk.red("图片检测失败", err));
+  var imgPromise = Promise.resolve({});
+  if (config.checkIMG) {
+    imgPromise = imgCore
+      .check(imgList, mergedConfig) // TODO: 解析样式文件中的图片，生成图片数组
+      .then(res => {
+        // loading finish
 
-      return err;
-    });
-  // 2. 依赖：对项目的 package 进行检测，发现没用的，过期的，是否有已知的安全隐患。
-  var depPromise = depCore
-    .check(mergedConfig)
-    .then(res => {
-      // loading finish
-      if (res.success) {
-        log(chalk.green("依赖检测未发现问题"));
-      } else if (config.checkDeps) {
-        log(chalk.red("依赖检测发现问题"));
-      }
-      return res;
-    })
-    .catch(err => {
-      // loading finish
-      // chalk red
-      log(chalk.red("依赖检测失败", err));
-      return err;
-    });
+        if (res.success) {
+          log(chalk.green("图片检测未发现问题"));
+        } else {
+          log(chalk.red("图片检测发现问题"));
+        }
+        return res;
+      })
+      .catch(err => {
+        // loading finish
+        log(chalk.red("图片检测失败", err));
+
+        return err;
+      });
+  }
+
+  var depPromise = Promise.resolve({});
+
+  if (config.checkDeps) {
+    // 2. 依赖：对项目的 package 进行检测，发现没用的，过期的，是否有已知的安全隐患。
+    depPromise = depCore
+      .check(mergedConfig)
+      .then(res => {
+        // loading finish
+        if (res.success) {
+          log(chalk.green("依赖检测未发现问题"));
+        } else if (config.checkDeps) {
+          log(chalk.red("依赖检测发现问题"));
+        }
+        return res;
+      })
+      .catch(err => {
+        // loading finish
+        // chalk red
+        log(chalk.red("依赖检测失败", err));
+        return err;
+      });
+  }
 
   Promise.all([imgPromise, depPromise])
     .then(res => {
@@ -176,5 +185,6 @@ if (config) {
         dep: err[1]
       });
       // mail.send(err, config);
-    });
+    })
+    .then(() => log(chalk.blue("检测完成～")));
 }
