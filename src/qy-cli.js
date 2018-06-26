@@ -54,7 +54,7 @@ if (plugins) {
 }
 const root = program.root || process.cwd();
 let config;
-if (!fs.statSync(`${root}/${configFile}`).isFile()) {
+if (!fs.existsSync(`${root}/${configFile}`)) {
   config = {};
 } else {
   config = loadDir(`${root}/${configFile}`);
