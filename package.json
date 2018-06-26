@@ -1,6 +1,6 @@
 {
   "name": "qy-cli",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "一站式前端自动检测平台",
   "main": "lib/qy-cli.js",
   "bin": {
