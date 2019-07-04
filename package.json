@@ -11,7 +11,9 @@
     "build": "npm run clean && babel src -d lib -q",
     "start": "npm run build && node lib/qy-cli.js",
     "test": "npm run build && mocha test/index.test.js",
-    "test-cli": "node test/walk.test.js"
+    "test-cli": "node test/walk.test.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -34,7 +36,8 @@
     "depcheck": "^0.6.8",
     "isomorphic-fetch": "^2.2.1",
     "mime": "^2.2.0",
-    "nodemailer": "^4.4.1"
+    "nodemailer": "^4.4.1",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -45,5 +48,6 @@
     "colors": "^1.1.2",
     "mocha": "^5.0.0",
     "walk": "^2.3.9"
-  }
+  },
+  "snyk": true
 }
