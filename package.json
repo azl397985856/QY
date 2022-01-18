@@ -32,7 +32,7 @@
     "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "depcheck": "^0.6.8",
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^3.0.0",
     "mime": "^2.2.0",
     "nodemailer": "^4.4.1"
   },
